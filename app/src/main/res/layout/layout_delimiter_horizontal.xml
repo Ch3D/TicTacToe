@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/game_field_delimiter_size"
+    android:background="@drawable/shape_divider_game_field"
+    tools:showIn="@layout/activity_game_field" />
