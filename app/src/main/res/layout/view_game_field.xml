@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cell_1"
+            style="@style/Button.GameField.Cell"
+            android:tag="1" />
+
+        <include layout="@layout/layout_delimiter_vertical" />
+
+        <Button
+            android:id="@+id/cell_2"
+            style="@style/Button.GameField.Cell"
+            android:tag="2" />
+
+        <include layout="@layout/layout_delimiter_vertical" />
+
+        <Button
+            android:id="@+id/cell_3"
+            style="@style/Button.GameField.Cell"
+            android:tag="3" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_delimiter_horizontal" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cell_4"
+            style="@style/Button.GameField.Cell"
+            android:tag="4" />
+
+        <include layout="@layout/layout_delimiter_vertical" />
+
+        <Button
+            android:id="@+id/cell_5"
+            style="@style/Button.GameField.Cell"
+            android:tag="5" />
+
+        <include layout="@layout/layout_delimiter_vertical" />
+
+        <Button
+            android:id="@+id/cell_6"
+            style="@style/Button.GameField.Cell"
+            android:tag="6" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_delimiter_horizontal" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cell_7"
+            style="@style/Button.GameField.Cell"
+            android:tag="7" />
+
+        <include layout="@layout/layout_delimiter_vertical" />
+
+        <Button
+            android:id="@+id/cell_8"
+            style="@style/Button.GameField.Cell"
+            android:tag="8" />
+
+        <include layout="@layout/layout_delimiter_vertical" />
+
+        <Button
+            android:id="@+id/cell_9"
+            style="@style/Button.GameField.Cell"
+            android:tag="9" />
+    </LinearLayout>
+
+</merge>
