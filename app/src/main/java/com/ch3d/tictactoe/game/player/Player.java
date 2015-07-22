@@ -1,4 +1,4 @@
-package com.ch3d.tictactoe.game;
+package com.ch3d.tictactoe.game.player;
 
 import android.os.Parcel;
 import android.os.Parcelable;

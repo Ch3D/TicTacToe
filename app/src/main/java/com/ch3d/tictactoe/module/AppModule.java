@@ -3,8 +3,8 @@ package com.ch3d.tictactoe.module;
 import com.ch3d.tictactoe.GameFieldActivity;
 import com.ch3d.tictactoe.MainActivity;
 import com.ch3d.tictactoe.TicTacToeApplication;
-import com.ch3d.tictactoe.game.BasicGameController;
-import com.ch3d.tictactoe.game.GameController;
+import com.ch3d.tictactoe.game.controller.BasicGameController;
+import com.ch3d.tictactoe.game.controller.GameController;
 import com.ch3d.tictactoe.game.GameField;
 import com.ch3d.tictactoe.view.GameFieldView;
 

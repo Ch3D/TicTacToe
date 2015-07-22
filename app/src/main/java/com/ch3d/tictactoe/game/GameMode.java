@@ -1,5 +1,7 @@
 package com.ch3d.tictactoe.game;
 
+import com.ch3d.tictactoe.game.player.Player;
+
 import auto.parcel.AutoParcel;
 
 /**

@@ -9,7 +9,8 @@ import android.widget.LinearLayout;
 
 import com.ch3d.tictactoe.R;
 import com.ch3d.tictactoe.TicTacToeApplication;
-import com.ch3d.tictactoe.game.GameController;
+import com.ch3d.tictactoe.game.controller.GameController;
+import com.ch3d.tictactoe.game.mark.CellMark;
 
 import javax.inject.Inject;
 
@@ -19,7 +20,10 @@ import butterknife.ButterKnife;
 /**
  * Created by Ch3D on 21.07.2015.
  */
-public class GameFieldView extends LinearLayout implements View.OnClickListener {
+public class GameFieldView extends LinearLayout implements View.OnClickListener, GameHistoryListener {
+
+	public static final String EMPTY_STRING = "";
+
 	@Inject
 	protected GameController mGameController;
 
@@ -86,6 +90,28 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener 
 
 	@Override
 	public void onClick(final View v) {
-		mGameController.onCellClick((String) v.getTag());
+		mGameController.onCellClick((String) v.getTag(), this);
+	}
+
+	@Override
+	public void onCellMarked(final int pos, final CellMark mark) {
+		final Button view = (Button) getViewForPosition(pos);
+		view.setText(mark.getType());
+	}
+
+	private View getViewForPosition(final int pos) {
+		return findViewWithTag(String.valueOf(pos));
+	}
+
+	public void clear() {
+		btnCell1.setText(EMPTY_STRING);
+		btnCell2.setText(EMPTY_STRING);
+		btnCell3.setText(EMPTY_STRING);
+		btnCell4.setText(EMPTY_STRING);
+		btnCell5.setText(EMPTY_STRING);
+		btnCell6.setText(EMPTY_STRING);
+		btnCell7.setText(EMPTY_STRING);
+		btnCell8.setText(EMPTY_STRING);
+		btnCell9.setText(EMPTY_STRING);
 	}
 }
