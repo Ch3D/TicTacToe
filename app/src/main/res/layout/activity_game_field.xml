@@ -9,6 +9,34 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
+    <LinearLayout
+        android:id="@+id/panel_controls"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/game_control_height"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/replay"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#7700ff00"
+            android:text="Play again"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/exit"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#77ff0000"
+            android:text="Exit"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
 </FrameLayout>
 
 

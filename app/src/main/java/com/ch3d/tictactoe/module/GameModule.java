@@ -23,7 +23,7 @@ public class GameModule {
 	@Provides
 	@Singleton
 	GameController provideGameController() {
-		return new BasicGameController(application);
+		return new BasicGameController();
 	}
 
 }

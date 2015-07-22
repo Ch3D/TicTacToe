@@ -1,22 +1,19 @@
 package com.ch3d.tictactoe.game.state;
 
-import com.ch3d.tictactoe.game.GameField;
 import com.ch3d.tictactoe.game.history.GameHistory;
 import com.ch3d.tictactoe.game.history.GameStepO;
 import com.ch3d.tictactoe.game.history.GameStepX;
+import com.ch3d.tictactoe.game.history.StepResult;
 
 /**
  * Created by Ch3D on 22.07.2015.
  */
 public class GameStateController {
-	private final GameField mGameField;
-
 	private GameHistory mHistory;
 
 	private GameState mCurrentState;
 
-	public GameStateController(final GameField gameField) {
-		mGameField = gameField;
+	public GameStateController() {
 		mHistory = new GameHistory();
 		mCurrentState = GameState.START;
 	}
@@ -31,15 +28,17 @@ public class GameStateController {
 		} else {
 			checkAndUpdateState();
 		}
+		mHistory.dump();
 		return mCurrentState;
 	}
 
-	public GameState moveY(final int pos) {
+	public GameState moveO(final int pos) {
 		if(mHistory.addStep(new GameStepO(pos))) {
 			mCurrentState = GameState.O_WON;
 		} else {
 			checkAndUpdateState();
 		}
+		mHistory.dump();
 		return mCurrentState;
 	}
 
@@ -62,6 +61,10 @@ public class GameStateController {
 		}
 	}
 
+	public StepResult getWinCombination() {
+		return mHistory.getWinnerCombination();
+	}
+
 	public boolean validateStep(final int pos) {
 		return !mHistory.isBusy(pos);
 	}
@@ -69,5 +72,9 @@ public class GameStateController {
 	public void clear() {
 		mCurrentState = GameState.START;
 		mHistory.clear();
+	}
+
+	public GameHistory getHistory() {
+		return mHistory;
 	}
 }

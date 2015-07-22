@@ -1,5 +1,7 @@
 package com.ch3d.tictactoe.game.controller;
 
+import com.ch3d.tictactoe.game.history.StepResult;
+import com.ch3d.tictactoe.game.state.GameState;
 import com.ch3d.tictactoe.view.GameHistoryListener;
 
 /**
@@ -15,6 +17,8 @@ public interface GameController {
 	 */
 	void onCellClick(String tag, final GameHistoryListener listener);
 
+	StepResult getWinCombination();
+
 	/**
 	 * Play again - default case when user taps 'Play again'
 	 */
@@ -22,6 +26,8 @@ public interface GameController {
 
 	/**
 	 * Clear game and all the data
-	 * */
+	 */
 	void clear();
+
+	GameState getState();
 }

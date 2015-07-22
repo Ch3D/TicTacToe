@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="game_field_delimiter_size">2dp</dimen>
     <dimen name="game_field_cell_size">96dp</dimen>
+    <dimen name="game_control_height">48dp</dimen>
 </resources>

@@ -1,7 +1,9 @@
 package com.ch3d.tictactoe.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -10,9 +12,8 @@ import android.widget.LinearLayout;
 import com.ch3d.tictactoe.R;
 import com.ch3d.tictactoe.TicTacToeApplication;
 import com.ch3d.tictactoe.game.controller.GameController;
+import com.ch3d.tictactoe.game.history.StepResult;
 import com.ch3d.tictactoe.game.mark.CellMark;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +25,14 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 
 	public static final String EMPTY_STRING = "";
 
-	@Inject
+	public static final float CELL_SCALE_FACTOR = 1.1f;
+
+	public static final int CELL_BG_COLOR = Color.argb(77, 255, 0, 0);
+
+	public static final float SCALE_FACTOR_DEFAULT = 1.0f;
+
+	private static final String TAG = GameFieldView.class.getSimpleName();
+
 	protected GameController mGameController;
 
 	@Bind(R.id.cell_1)
@@ -77,6 +85,8 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 		LayoutInflater.from(getContext()).inflate(R.layout.view_game_field, this, true);
 		ButterKnife.bind(this);
 
+		clear();
+
 		btnCell1.setOnClickListener(this);
 		btnCell2.setOnClickListener(this);
 		btnCell3.setOnClickListener(this);
@@ -90,6 +100,10 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 
 	@Override
 	public void onClick(final View v) {
+		if(mGameController.getState().isGameFinished()) {
+			// fail fast
+			return;
+		}
 		mGameController.onCellClick((String) v.getTag(), this);
 	}
 
@@ -104,14 +118,38 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 	}
 
 	public void clear() {
-		btnCell1.setText(EMPTY_STRING);
-		btnCell2.setText(EMPTY_STRING);
-		btnCell3.setText(EMPTY_STRING);
-		btnCell4.setText(EMPTY_STRING);
-		btnCell5.setText(EMPTY_STRING);
-		btnCell6.setText(EMPTY_STRING);
-		btnCell7.setText(EMPTY_STRING);
-		btnCell8.setText(EMPTY_STRING);
-		btnCell9.setText(EMPTY_STRING);
+		clearView(btnCell1);
+		clearView(btnCell2);
+		clearView(btnCell3);
+		clearView(btnCell4);
+		clearView(btnCell5);
+		clearView(btnCell6);
+		clearView(btnCell7);
+		clearView(btnCell8);
+		clearView(btnCell9);
+	}
+
+	private void clearView(final Button view) {
+		view.setText(EMPTY_STRING);
+		view.animate().scaleX(SCALE_FACTOR_DEFAULT).scaleY(SCALE_FACTOR_DEFAULT).start();
+		view.setBackgroundColor(Color.TRANSPARENT);
+	}
+
+	public void showCombination(final StepResult winCombination) {
+		if(winCombination == StepResult.NULL) {
+			// skip null combination
+			return;
+		}
+		Log.d(TAG, "showCombination = " + winCombination);
+		for(final int i : winCombination.getPositions()) {
+			Log.d(TAG, "findViewWithTag = " + i);
+			final View viewWithTag = findViewWithTag(Integer.toString(i));
+			viewWithTag.animate().scaleX(CELL_SCALE_FACTOR).scaleY(CELL_SCALE_FACTOR).start();
+			viewWithTag.setBackgroundColor(CELL_BG_COLOR);
+		}
+	}
+
+	public void setGameController(final GameController gameController) {
+		mGameController = gameController;
 	}
 }

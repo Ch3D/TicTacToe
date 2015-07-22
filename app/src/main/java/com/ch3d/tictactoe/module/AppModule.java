@@ -3,9 +3,9 @@ package com.ch3d.tictactoe.module;
 import com.ch3d.tictactoe.GameFieldActivity;
 import com.ch3d.tictactoe.MainActivity;
 import com.ch3d.tictactoe.TicTacToeApplication;
+import com.ch3d.tictactoe.game.GameField;
 import com.ch3d.tictactoe.game.controller.BasicGameController;
 import com.ch3d.tictactoe.game.controller.GameController;
-import com.ch3d.tictactoe.game.GameField;
 import com.ch3d.tictactoe.view.GameFieldView;
 
 import dagger.Module;
@@ -19,6 +19,6 @@ import dagger.Module;
 		MainActivity.class, GameFieldActivity.class,
 		/* other */
 		GameFieldView.class, GameController.class, BasicGameController.class, GameField.class},
-		complete = false)
+		complete = false, library = true)
 public class AppModule {
 }

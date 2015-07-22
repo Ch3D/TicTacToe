@@ -1,5 +1,8 @@
 package com.ch3d.tictactoe.game;
 
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
+
 import com.ch3d.tictactoe.game.player.Player;
 
 import auto.parcel.AutoParcel;
@@ -8,24 +11,21 @@ import auto.parcel.AutoParcel;
  * Created by Ch3D on 21.07.2015.
  */
 @AutoParcel
-public class GameMode {
-	private Player mPlayer1;
+public abstract class GameMode implements Parcelable {
 
-	private Player mPlayer2;
+	public static final int MODE_HUMAN_HUMAN = 0;
 
-	public Player getPlayer1() {
-		return mPlayer1;
+	public static final int MODE_HUMAN_AI = 1;
+
+	public static final int MODE_AI_HUMAN = 2;
+
+	public static GameMode create(Player player1, Player player2) {
+		return new AutoParcel_GameMode(player1, player2);
 	}
 
-	public void setPlayer1(final Player player1) {
-		mPlayer1 = player1;
-	}
+	@Nullable
+	public abstract Player player1();
 
-	public Player getPlayer2() {
-		return mPlayer2;
-	}
-
-	public void setPlayer2(final Player player2) {
-		mPlayer2 = player2;
-	}
+	@Nullable
+	public abstract Player player2();
 }
