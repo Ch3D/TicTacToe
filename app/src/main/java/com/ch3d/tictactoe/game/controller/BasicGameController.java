@@ -15,9 +15,12 @@ import java.util.ArrayList;
 public class BasicGameController implements GameController {
 	protected final GameStateController mStateController;
 
+	protected final GameHistoryListener mListener;
+
 	private ArrayList<GameListener> mListeners = new ArrayList<>();
 
-	public BasicGameController() {
+	public BasicGameController(final GameHistoryListener listener) {
+		mListener = listener;
 		mStateController = new GameStateController();
 	}
 
@@ -94,6 +97,12 @@ public class BasicGameController implements GameController {
 	@Override
 	public void replay(final String tag) {
 		mStateController.clear();
+		startGame();
+	}
+
+	@Override
+	public void startGame() {
+
 	}
 
 	@Override

@@ -43,15 +43,17 @@ public class GameFieldActivity extends AppCompatActivity implements GameListener
 		setContentView(R.layout.activity_game_field);
 
 		mMode = getIntent().getParcelableExtra(EXTRAS.GAME_MODE);
-		mGameController = GameControllerFactory.create(mMode);
 
 		final TicTacToeApplication application = (TicTacToeApplication) getApplicationContext();
 		application.inject(this);
 		ButterKnife.bind(this);
 
+		mGameController = GameControllerFactory.create(mMode, mViewGameField);
 		mViewGameField.setGameController(mGameController);
 		mControlsView.setTranslationY(getResources().getDimensionPixelSize(R.dimen.game_control_height));
 		mControlsView.setAlpha(0);
+
+		mGameController.startGame();
 	}
 
 	@Override

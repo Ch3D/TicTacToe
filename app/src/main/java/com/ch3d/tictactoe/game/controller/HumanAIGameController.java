@@ -22,8 +22,6 @@ import java.util.Random;
  */
 public class HumanAIGameController extends BasicGameController {
 
-	public static final int WRONG_POSITION = -1;
-
 	private final Random mCornerRandom;
 
 	private final Random mEdgeRandom;
@@ -32,8 +30,8 @@ public class HumanAIGameController extends BasicGameController {
 
 	private int[] edges = {2, 4, 6, 8};
 
-	public HumanAIGameController() {
-		super();
+	public HumanAIGameController(GameHistoryListener listener) {
+		super(listener);
 		mCornerRandom = new Random();
 		mEdgeRandom = new Random();
 	}
@@ -110,5 +108,10 @@ public class HumanAIGameController extends BasicGameController {
 			return;
 		}
 		super.processCellClick(listener, state, pos);
+	}
+
+	@Override
+	public void startGame() {
+
 	}
 }
