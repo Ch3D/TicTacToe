@@ -1,7 +1,12 @@
 package com.ch3d.tictactoe.game.controller;
 
+import android.graphics.Point;
+
+import com.ch3d.tictactoe.game.CellScore;
+import com.ch3d.tictactoe.game.MinMaxStrategy;
 import com.ch3d.tictactoe.game.history.GameHistory;
 import com.ch3d.tictactoe.game.history.GameStep;
+import com.ch3d.tictactoe.game.history.GameStepX;
 import com.ch3d.tictactoe.game.mark.CellMarkO;
 import com.ch3d.tictactoe.game.state.GameState;
 import com.ch3d.tictactoe.game.state.GameStateController;
@@ -52,7 +57,7 @@ public class HumanAIGameController extends BasicGameController {
 
 	private int analyze(final GameHistory history) {
 		if(history.size() == 1) {
-			if(history.cell(1, 1) == 1) {
+			if(history.cell(1, 1) == GameStepX.VALUE) {
 				final int cornerIndex = mCornerRandom.nextInt(4);
 				final int corner = corners[cornerIndex];
 				final GameState gameState = mStateController.moveO(corner);
@@ -74,18 +79,18 @@ public class HumanAIGameController extends BasicGameController {
 			return winPosition;
 		}
 
-		// try to block
-		final int blockPosition = canBlock(history);
-		if(blockPosition != WRONG_POSITION) {
-			return blockPosition;
+		// find best move
+		final MinMaxStrategy minMaxStrategy = new MinMaxStrategy(history.getBoard());
+		minMaxStrategy.callMinimax(0, 2);
+		for(CellScore cs : minMaxStrategy.getRootsChildrenScores()) {
+			System.out.println("Point: " + cs.getPoint() + " Score: " + cs.getScore());
 		}
-
-		// otherwise - find best position
-		return mCornerRandom.nextInt(9) + 1;
-	}
-
-	private int canBlock(final GameHistory history) {
-		return WRONG_POSITION;
+		final Point point = minMaxStrategy.returnBestMoveO();
+		System.err.println("point = " + point);
+		minMaxStrategy.placeAMove(point, 1);
+		final int pos = (point.x * 3) + (point.y + 1);
+		System.out.println("pos: " + pos);
+		return pos;
 	}
 
 	private int canWin(final GameHistory history) {

@@ -134,4 +134,8 @@ public class GameHistory {
 		}
 		return result;
 	}
+
+	public int[][] getBoard() {
+		return mBoard;
+	}
 }
