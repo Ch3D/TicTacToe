@@ -1,6 +1,7 @@
 package com.ch3d.tictactoe.game;
 
 import android.graphics.Point;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,10 +78,12 @@ public class MinMaxStrategy {
 
 	public int minimax(int depth, int turn) {
 		if(hasXWon()) {
-			return +1;
+			System.err.println("xwon depth = " + depth);
+			return +1 * (9 - depth);
 		}
 		if(hasOWon()) {
-			return -1;
+			System.err.println("owon depth = " + depth);
+			return -1 * (9 - depth);
 		}
 
 		List<Point> pointsAvailable = getAvailableStates();
@@ -129,40 +132,42 @@ public class MinMaxStrategy {
 	}
 
 	public int returnMax(List<Integer> list) {
-		int max = Integer.MIN_VALUE;
+		int maxValue = Integer.MIN_VALUE;
 		int index = -1;
 		for(int i = 0; i < list.size(); ++i) {
-			if(list.get(i) > max) {
-				max = list.get(i);
+			if(list.get(i) > maxValue) {
+				maxValue = list.get(i);
 				index = i;
 			}
 		}
 		return list.get(index);
 	}
 
-	public int returnSum(List<Integer> list) {
-		int res = 0;
-		for(int i = 0; i < list.size(); ++i) {
-			res += list.get(i);
-		}
-		return res;
-	}
-
+	@Nullable
 	public Point returnBestMoveX() {
-		int MAX = -100000;
-		int best = -1;
+		if(rootsChildrenScores.isEmpty()) {
+			return null;
+		}
+
+		int valueMax = Integer.MIN_VALUE;
+		int bestIndex = -1;
 
 		for(int i = 0; i < rootsChildrenScores.size(); ++i) {
-			if(MAX < rootsChildrenScores.get(i).getScore()) {
-				MAX = rootsChildrenScores.get(i).getScore();
-				best = i;
+			if(valueMax < rootsChildrenScores.get(i).getScore()) {
+				valueMax = rootsChildrenScores.get(i).getScore();
+				bestIndex = i;
 			}
 		}
 
-		return rootsChildrenScores.get(best).getPoint();
+		return rootsChildrenScores.get(bestIndex).getPoint();
 	}
 
+	@Nullable
 	public Point returnBestMoveO() {
+		if(rootsChildrenScores.isEmpty()) {
+			return null;
+		}
+
 		int MIN = Integer.MAX_VALUE;
 		int best = -1;
 		for(int i = 0; i < rootsChildrenScores.size(); ++i) {

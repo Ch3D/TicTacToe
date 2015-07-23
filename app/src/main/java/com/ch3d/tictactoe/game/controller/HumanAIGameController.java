@@ -57,14 +57,7 @@ public class HumanAIGameController extends BasicGameController {
 		if(history.size() == 1) {
 			if(history.cell(1, 1) == GameStepX.VALUE) {
 				final int cornerIndex = mCornerRandom.nextInt(4);
-				final int corner = corners[cornerIndex];
-				final GameState gameState = mStateController.moveO(corner);
-				if(gameState == GameState.O_WON) {
-					notifyWinner(GameState.O_WON);
-				} else if(gameState == GameState.DRAW) {
-					notifyDraw();
-				}
-				return corner;
+				return corners[cornerIndex];
 			} else {
 				// move center
 				return 5;
@@ -84,6 +77,9 @@ public class HumanAIGameController extends BasicGameController {
 			System.out.println("Point: " + cs.getPoint() + " Score: " + cs.getScore());
 		}
 		final Point point = minMaxStrategy.returnBestMoveO();
+		if(point == null) {
+			return WRONG_POSITION;
+		}
 		System.err.println("point = " + point);
 		minMaxStrategy.placeAMove(point, 1);
 		final int pos = (point.x * 3) + (point.y + 1);

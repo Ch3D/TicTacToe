@@ -53,6 +53,9 @@ public class AIHumanGameController extends BasicGameController {
 			System.out.println("Point: " + cs.getPoint() + " Score: " + cs.getScore());
 		}
 		final Point point = minMaxStrategy.returnBestMoveX();
+		if(point == null) {
+			return WRONG_POSITION;
+		}
 		System.err.println("point = " + point);
 		minMaxStrategy.placeAMove(point, 1);
 		final int pos = (point.x * 3) + (point.y + 1);

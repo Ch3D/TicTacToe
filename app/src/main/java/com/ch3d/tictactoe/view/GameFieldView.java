@@ -110,7 +110,9 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 	@Override
 	public void onCellMarked(final int pos, final CellMark mark) {
 		final Button view = (Button) getViewForPosition(pos);
-		view.setText(mark.getType());
+		if(view != null) {
+			view.setText(mark.getType());
+		}
 	}
 
 	private View getViewForPosition(final int pos) {
