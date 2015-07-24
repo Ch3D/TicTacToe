@@ -6,6 +6,7 @@ import com.ch3d.tictactoe.game.history.step.GameStep;
 import com.ch3d.tictactoe.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -118,5 +119,9 @@ public class GameHistory {
 
 	public int getBoardSize() {
 		return mBoard.getSize();
+	}
+
+	public List<GameStep> getMoves() {
+		return Collections.unmodifiableList(mSteps);
 	}
 }

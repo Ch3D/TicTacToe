@@ -1,13 +1,23 @@
 package com.ch3d.tictactoe.game.history.step;
 
+import com.ch3d.tictactoe.game.mark.CellMark;
+
 /**
  * Created by Ch3D on 22.07.2015.
  */
 public abstract class GameStep {
 	private final int position;
 
-	public GameStep(final int position) {
+	private final CellMark mMark;
+
+	public GameStep(final int position, final CellMark mark) {
 		this.position = position;
+		mMark = mark;
+
+	}
+
+	public CellMark getMark() {
+		return mMark;
 	}
 
 	public int getPosition() {

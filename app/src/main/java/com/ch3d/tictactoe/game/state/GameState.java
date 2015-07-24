@@ -9,13 +9,13 @@ public final class GameState {
 
 	public static final GameState O_MOVE = new GameState(1, "O-MOVE");
 
-	public static final GameState X_WON = new GameState(2, "X-WON", true);
+	public static final GameState X_WON = new GameState(2, "X-WON", true, true);
 
-	public static final GameState O_WON = new GameState(3, "O-WON", true);
+	public static final GameState O_WON = new GameState(3, "O-WON", true, true);
 
 	public static final GameState START = new GameState(4, "START");
 
-	public static final GameState DRAW = new GameState(5, "DRAW");
+	public static final GameState DRAW = new GameState(5, "DRAW", true, false);
 
 	private final int mId;
 
@@ -23,14 +23,31 @@ public final class GameState {
 
 	private final boolean mFinished;
 
-	private GameState(int id, String name, boolean finished) {
+	private boolean mHasWinner;
+
+	private GameState(int id, String name, boolean finished, boolean hasWinner) {
 		mId = id;
 		mName = name;
 		mFinished = finished;
+		mHasWinner = hasWinner;
 	}
 
 	private GameState(int id, String name) {
-		this(id, name, false);
+		this(id, name, false, false);
+	}
+
+	@Override
+	public String toString() {
+		return "GameState{" +
+				"mId=" + mId +
+				", mName='" + mName + '\'' +
+				", mFinished=" + mFinished +
+				", mHasWinner=" + mHasWinner +
+				'}';
+	}
+
+	public String getName() {
+		return mName;
 	}
 
 	public int getId() {
@@ -59,5 +76,9 @@ public final class GameState {
 
 	public boolean isGameFinished() {
 		return mFinished;
+	}
+
+	public boolean hasWinner() {
+		return mHasWinner;
 	}
 }

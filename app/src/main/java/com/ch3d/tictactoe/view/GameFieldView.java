@@ -14,6 +14,7 @@ import com.ch3d.tictactoe.TicTacToeApplication;
 import com.ch3d.tictactoe.game.controller.GameController;
 import com.ch3d.tictactoe.game.history.StepResult;
 import com.ch3d.tictactoe.game.mark.CellMark;
+import com.ch3d.tictactoe.utils.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,8 +23,6 @@ import butterknife.ButterKnife;
  * Created by Ch3D on 21.07.2015.
  */
 public class GameFieldView extends LinearLayout implements View.OnClickListener, GameHistoryListener {
-
-	public static final String EMPTY_STRING = "";
 
 	public static final float CELL_SCALE_FACTOR = 1.1f;
 
@@ -132,7 +131,7 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 	}
 
 	private void clearView(final Button view) {
-		view.setText(EMPTY_STRING);
+		view.setText(Utils.EMPTY_STRING);
 		view.animate().scaleX(SCALE_FACTOR_DEFAULT).scaleY(SCALE_FACTOR_DEFAULT).start();
 		view.setBackgroundColor(Color.TRANSPARENT);
 	}
@@ -153,5 +152,10 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 
 	public void setGameController(final GameController gameController) {
 		mGameController = gameController;
+	}
+
+	public void prepare(final GameController gameController) {
+		setGameController(gameController);
+		gameController.prepare(this);
 	}
 }

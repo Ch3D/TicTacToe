@@ -35,4 +35,6 @@ public interface GameController {
 	void clear();
 
 	GameState getState();
+
+	void prepare(GameHistoryListener listener);
 }

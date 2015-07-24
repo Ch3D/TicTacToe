@@ -1,7 +1,9 @@
 package com.ch3d.tictactoe.game.controller;
 
 import com.ch3d.tictactoe.game.GameListener;
+import com.ch3d.tictactoe.game.history.GameHistory;
 import com.ch3d.tictactoe.game.history.StepResult;
+import com.ch3d.tictactoe.game.history.step.GameStep;
 import com.ch3d.tictactoe.game.mark.CellMarkO;
 import com.ch3d.tictactoe.game.mark.CellMarkX;
 import com.ch3d.tictactoe.game.state.GameState;
@@ -111,7 +113,7 @@ public class BasicGameController implements GameController {
 
 	@Override
 	public void startGame() {
-
+		// do nothing
 	}
 
 	@Override
@@ -122,5 +124,13 @@ public class BasicGameController implements GameController {
 	@Override
 	public GameState getState() {
 		return mStateController.getState();
+	}
+
+	@Override
+	public void prepare(final GameHistoryListener listener) {
+		final GameHistory history = mStateController.getHistory();
+		for(final GameStep gameStep : history.getMoves()) {
+			listener.onCellMarked(gameStep.getPosition(), gameStep.getMark());
+		}
 	}
 }

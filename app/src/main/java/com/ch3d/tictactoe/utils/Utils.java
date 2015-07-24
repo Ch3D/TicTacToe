@@ -10,6 +10,8 @@ import java.util.List;
  * Created by Ch3D on 24.07.2015.
  */
 public class Utils {
+	public static final String EMPTY_STRING = "";
+
 	/**
 	 * Convert cell into index(position)
 	 */
