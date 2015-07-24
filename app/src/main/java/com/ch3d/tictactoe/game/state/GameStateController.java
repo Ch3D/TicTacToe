@@ -8,6 +8,8 @@ import com.ch3d.tictactoe.game.history.step.GameStepX;
 
 /**
  * Created by Ch3D on 22.07.2015.
+ * <p/>
+ * Games states machine
  */
 public class GameStateController {
 	private GameHistory mHistory;

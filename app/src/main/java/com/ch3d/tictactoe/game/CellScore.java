@@ -4,6 +4,8 @@ import com.ch3d.tictactoe.game.board.GameCell;
 
 /**
  * Created by Ch3D on 22.07.2015.
+ * <p/>
+ * Possible score for specific position
  */
 public class CellScore {
 	private final int mScore;

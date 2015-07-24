@@ -1,5 +1,6 @@
 package com.ch3d.tictactoe.game.history;
 
+import com.ch3d.tictactoe.BuildConfig;
 import com.ch3d.tictactoe.game.board.GameBoard;
 import com.ch3d.tictactoe.game.board.GameCell;
 import com.ch3d.tictactoe.game.history.step.GameStep;
@@ -105,8 +106,10 @@ public class GameHistory {
 	}
 
 	public void dump() {
-		System.err.println("==== " + size() + " ====");
-		mBoard.dump();
+		if(BuildConfig.DEBUG) {
+			System.err.println("==== " + size() + " ====");
+			mBoard.dump();
+		}
 	}
 
 	/**
@@ -123,10 +126,6 @@ public class GameHistory {
 
 	public int getBoardSize() {
 		return mBoard.getSize();
-	}
-
-	public int getCellsCount() {
-		return mBoard.getCellsCount();
 	}
 
 	public List<GameStep> getMoves() {

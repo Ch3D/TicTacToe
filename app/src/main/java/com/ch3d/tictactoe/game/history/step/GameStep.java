@@ -4,6 +4,8 @@ import com.ch3d.tictactoe.game.mark.CellMark;
 
 /**
  * Created by Ch3D on 22.07.2015.
+ * <p/>
+ * Represent single step/move in a game history
  */
 public abstract class GameStep {
 	public static final GameStep NULL = new GameStepX(0);

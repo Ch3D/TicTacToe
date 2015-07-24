@@ -8,6 +8,8 @@ import com.ch3d.tictactoe.game.state.GameState;
 
 /**
  * Created by Ch3D on 24.07.2015.
+ * <p/>
+ * This is used to retain data when the device is rotated
  */
 public class GameRetainedFragment extends Fragment {
 	public static final String TAG = GameRetainedFragment.class.getSimpleName();

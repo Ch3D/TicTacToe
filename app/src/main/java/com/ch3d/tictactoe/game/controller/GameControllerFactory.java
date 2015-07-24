@@ -2,13 +2,15 @@ package com.ch3d.tictactoe.game.controller;
 
 import android.support.annotation.NonNull;
 
+import com.ch3d.tictactoe.GameHistoryListener;
 import com.ch3d.tictactoe.game.GameMode;
 import com.ch3d.tictactoe.game.controller.ai.AIHumanGameController;
 import com.ch3d.tictactoe.game.controller.ai.HumanAIGameController;
-import com.ch3d.tictactoe.GameHistoryListener;
 
 /**
  * Created by Ch3D on 22.07.2015.
+ * <p/>
+ * Instantiates appropriate game controller for selected game mode
  */
 public class GameControllerFactory {
 	public static final GameController create(@NonNull final GameMode gameMode, GameHistoryListener listener) {

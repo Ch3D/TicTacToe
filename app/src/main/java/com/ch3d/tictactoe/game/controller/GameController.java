@@ -20,6 +20,9 @@ public interface GameController {
 	 */
 	void onCellClick(String tag, final GameHistoryListener listener);
 
+	/**
+	 * @return combination that led to victory
+	 */
 	StepResult getWinCombination();
 
 	/**
@@ -34,6 +37,9 @@ public interface GameController {
 	 */
 	void clear();
 
+	/**
+	 * @return current game state
+	 */
 	GameState getState();
 
 	void prepare(GameHistoryListener listener);

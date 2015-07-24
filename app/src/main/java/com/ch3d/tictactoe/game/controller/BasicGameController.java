@@ -14,6 +14,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Ch3D on 21.07.2015.
+ * <p/>
+ * Simple game controller
  */
 public class BasicGameController implements GameController {
 	protected final GameStateController mStateController;
