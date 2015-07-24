@@ -68,7 +68,6 @@ public class GameFieldActivity extends AppCompatActivity implements GameListener
 			mGameController = GameControllerFactory.create(mMode, mViewGameField);
 			mViewGameField.setGameController(mGameController);
 			dataFragment.setData(mGameController);
-
 			mGameController.startGame();
 		} else { // retain data after screen rotation
 			mGameController = dataFragment.getData();
@@ -96,8 +95,9 @@ public class GameFieldActivity extends AppCompatActivity implements GameListener
 	protected void onReplay() {
 		mViewGameField.clear();
 		mGameController.replay(Utils.EMPTY_STRING);
-		mControlsView.animate().alpha(Utils.ALPHA_TRANSPARENT).translationY(getResources().getDimensionPixelSize(
-				R.dimen.game_control_height))
+		mControlsView.animate().alpha(Utils.ALPHA_TRANSPARENT)
+		             .translationY(getResources().getDimensionPixelSize(
+				             R.dimen.game_control_height))
 		             .start();
 	}
 

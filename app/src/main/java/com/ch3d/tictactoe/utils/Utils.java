@@ -1,6 +1,8 @@
 package com.ch3d.tictactoe.utils;
 
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.ch3d.tictactoe.game.board.GameCell;
 
@@ -11,6 +13,10 @@ import java.util.List;
  */
 public class Utils {
 	public static final String EMPTY_STRING = "";
+
+	public static final float SCALE_INVISIBLE = 0f;
+
+	public static final float SCALE_VISIBLE = 1f;
 
 	public static final float ALPHA_TRANSPARENT = 0f;
 
@@ -64,5 +70,19 @@ public class Utils {
 			return null;
 		}
 		return list.get(list.size() - 1);
+	}
+
+	public static void setBackground(final View view, final int color) {
+		if(view == null) {
+			return;
+		}
+		view.setBackgroundColor(color);
+	}
+
+	public static void clearDrawable(final ImageButton view) {
+		if(view == null) {
+			return;
+		}
+		view.setImageDrawable(null);
 	}
 }

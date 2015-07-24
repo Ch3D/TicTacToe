@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class BasicGameController implements GameController {
 	protected final GameStateController mStateController;
 
-	protected final GameHistoryListener mListener;
+	protected GameHistoryListener mListener;
 
 	private ArrayList<GameListener> mListeners = new ArrayList<>();
 
@@ -132,5 +132,10 @@ public class BasicGameController implements GameController {
 		for(final GameStep gameStep : history.getMoves()) {
 			listener.onCellMarked(gameStep.getPosition(), gameStep.getMark());
 		}
+	}
+
+	@Override
+	public void addGameHistoryListener(final GameHistoryListener listener) {
+		mListener = listener;
 	}
 }

@@ -1,5 +1,7 @@
 package com.ch3d.tictactoe.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -38,6 +40,41 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 	public static final int ANIMATION_DELAY_WIN = 500;
 
 	private static final String TAG = GameFieldView.class.getSimpleName();
+
+	private class RestoreViewStateAdapter extends AnimatorListenerAdapter {
+		private ImageButton mView;
+
+		public RestoreViewStateAdapter(final ImageButton view) {
+			mView = view;
+		}
+
+		@Override
+		public void onAnimationCancel(final Animator animation) {
+			super.onAnimationCancel(animation);
+			restoreViewState();
+		}
+
+		@Override
+		public void onAnimationEnd(final Animator animation) {
+			super.onAnimationEnd(animation);
+			restoreViewState();
+		}
+
+		private void restoreViewState() {
+			if(mView == null) {
+				// skip
+				return;
+			}
+			mView.animate()
+			     .scaleX(SCALE_FACTOR_DEFAULT)
+			     .scaleY(SCALE_FACTOR_DEFAULT)
+			     .alpha(Utils.ALPHA_VISIBLE)
+			     .start();
+			Utils.setBackground(mView, Color.TRANSPARENT);
+			Utils.clearDrawable(mView);
+			mView = null;
+		}
+	}
 
 	protected GameController mGameController;
 
@@ -115,11 +152,13 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 		final ImageButton view = (ImageButton) getViewForPosition(pos);
 		if(view != null) {
 			view.setImageResource(mark == CellMarkX.VALUE ? R.drawable.mark_x : R.drawable.mark_o);
-			view.setScaleX(Utils.ALPHA_TRANSPARENT);
-			view.setScaleY(Utils.ALPHA_TRANSPARENT);
+			view.setScaleX(Utils.SCALE_INVISIBLE);
+			view.setScaleY(Utils.SCALE_INVISIBLE);
+			view.setAlpha(Utils.ALPHA_TRANSPARENT);
 			view.animate()
-			    .scaleX(Utils.ALPHA_VISIBLE)
-			    .scaleY(Utils.ALPHA_VISIBLE)
+			    .scaleX(Utils.SCALE_VISIBLE)
+			    .scaleY(Utils.SCALE_VISIBLE)
+			    .alpha(Utils.ALPHA_VISIBLE)
 			    .setStartDelay(ANIMATION_DELAY_MARK)
 			    .start();
 		}
@@ -140,18 +179,8 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 		    .scaleX(Utils.ALPHA_TRANSPARENT)
 		    .scaleY(Utils.ALPHA_TRANSPARENT)
 		    .alpha(Utils.ALPHA_TRANSPARENT)
-		    .withEndAction(new Runnable() {
-			    @Override
-			    public void run() {
-				    view.animate()
-				        .scaleX(SCALE_FACTOR_DEFAULT)
-				        .scaleY(SCALE_FACTOR_DEFAULT)
-				        .alpha(Utils.ALPHA_VISIBLE)
-				        .start();
-				    view.setBackgroundColor(Color.TRANSPARENT);
-				    view.setImageDrawable(null);
-			    }
-		    }).start();
+		    .setListener(new RestoreViewStateAdapter(view))
+		    .start();
 	}
 
 	public void showCombination(final StepResult winCombination) {
@@ -176,6 +205,7 @@ public class GameFieldView extends LinearLayout implements View.OnClickListener,
 	}
 
 	public void prepare(final GameController gameController) {
+		gameController.addGameHistoryListener(this);
 		setGameController(gameController);
 		gameController.prepare(this);
 	}

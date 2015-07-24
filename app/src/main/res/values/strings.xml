@@ -8,4 +8,5 @@
     <string name="human_vs_human">Human vs Human</string>
     <string name="human_vs_ai">Human vs AI</string>
     <string name="ai_vs_human">AI vs Human</string>
+    <string name="play_again">Play again</string>
 </resources>

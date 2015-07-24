@@ -6,6 +6,16 @@ import com.ch3d.tictactoe.game.mark.CellMark;
  * Created by Ch3D on 22.07.2015.
  */
 public abstract class GameStep {
+	public static final GameStep NULL = new GameStepX(0);
+
+	public static GameStep create(final int player, final int pos) {
+		switch(player) {
+			case GameStepX.VALUE:
+				return new GameStepX(pos);
+		}
+		return GameStep.NULL;
+	}
+
 	private final int position;
 
 	private final CellMark mMark;
@@ -13,7 +23,6 @@ public abstract class GameStep {
 	public GameStep(final int position, final CellMark mark) {
 		this.position = position;
 		mMark = mark;
-
 	}
 
 	public CellMark getMark() {

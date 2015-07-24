@@ -117,6 +117,10 @@ public class GameHistory {
 		return mBoard.getMatrix();
 	}
 
+	public GameBoard getBoard() {
+		return mBoard;
+	}
+
 	public int getBoardSize() {
 		return mBoard.getSize();
 	}
