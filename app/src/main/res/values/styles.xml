@@ -17,7 +17,8 @@
 
     <style name="Button.GameMode">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?android:listPreferredItemHeightLarge</item>
+        <item name="android:layout_height">?android:listPreferredItemHeight</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
     <style name="Button.Replay" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
@@ -25,7 +26,8 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_gravity">bottom</item>
         <item name="android:background">@color/bg_btn_replay</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAppearance">?android:textAppearanceLarge</item>
     </style>
 
 </resources>

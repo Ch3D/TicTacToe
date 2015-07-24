@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.ch3d.tictactoe.game.CellScore;
 import com.ch3d.tictactoe.game.board.GameCell;
 
 import java.util.List;
@@ -84,5 +85,30 @@ public class Utils {
 			return;
 		}
 		view.setImageDrawable(null);
+	}
+
+	public static int getMaxIndex(List<CellScore> list) {
+		int valueMax = Integer.MIN_VALUE;
+		int bestIndex = -1;
+
+		for(int i = 0; i < list.size(); ++i) {
+			if(valueMax < list.get(i).getScore()) {
+				valueMax = list.get(i).getScore();
+				bestIndex = i;
+			}
+		}
+		return bestIndex;
+	}
+
+	public static int getMixIndex(List<CellScore> list) {
+		int valueMin = Integer.MAX_VALUE;
+		int best = -1;
+		for(int i = 0; i < list.size(); ++i) {
+			if(valueMin > list.get(i).getScore()) {
+				valueMin = list.get(i).getScore();
+				best = i;
+			}
+		}
+		return best;
 	}
 }

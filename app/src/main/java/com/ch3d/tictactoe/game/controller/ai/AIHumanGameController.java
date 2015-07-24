@@ -10,12 +10,19 @@ import com.ch3d.tictactoe.game.mark.CellMarkX;
 import com.ch3d.tictactoe.game.state.GameState;
 import com.ch3d.tictactoe.utils.Utils;
 
+import java.util.Random;
+
 /**
  * Created by Ch3D on 22.07.2015.
  */
 public class AIHumanGameController extends AIGameController {
+	private final Random mCornerRandom;
+
+	private int[] corners = {1, 3, 5, 7, 9};
+
 	public AIHumanGameController(GameHistoryListener listener) {
 		super(listener);
+		mCornerRandom = new Random();
 	}
 
 	@Override
@@ -26,7 +33,8 @@ public class AIHumanGameController extends AIGameController {
 	@Override
 	protected int analyze(final GameHistory history) {
 		if(history.size() == 0) {
-			return (history.getCellsCount() / 2) + 1;
+			final int cornerIndex = mCornerRandom.nextInt(5);
+			return corners[cornerIndex];
 		}
 
 		// find best move

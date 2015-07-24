@@ -21,6 +21,31 @@ public class MinMaxStrategy {
 
 	public static final int RESULT_NONE = 0;
 
+	public static int getMinIndex(List<CellScore> list) {
+		int valueMin = Integer.MAX_VALUE;
+		int best = -1;
+		for(int i = 0; i < list.size(); ++i) {
+			if(valueMin > list.get(i).getScore()) {
+				valueMin = list.get(i).getScore();
+				best = i;
+			}
+		}
+		return best;
+	}
+
+	public static int getMaxIndex(List<CellScore> list) {
+		int valueMax = Integer.MIN_VALUE;
+		int bestIndex = -1;
+
+		for(int i = 0; i < list.size(); ++i) {
+			if(valueMax < list.get(i).getScore()) {
+				valueMax = list.get(i).getScore();
+				bestIndex = i;
+			}
+		}
+		return bestIndex;
+	}
+
 	private final int[][] mBoard;
 
 	private List<CellScore> rootsChildrenScores;
@@ -42,15 +67,17 @@ public class MinMaxStrategy {
 	}
 
 	public boolean hasXWon() {
-		if((mBoard[0][0] == mBoard[1][1] && mBoard[0][0] == mBoard[2][2] && mBoard[0][0] == 1) || (mBoard[0][2] == mBoard[1][1]
-				&& mBoard[0][2] == mBoard[2][0] && mBoard[0][2] == 1)) {
-			//System.out.println("X Diagonal Win");
+		return hasWon(GameStepX.VALUE);
+	}
+
+	public boolean hasWon(int value) {
+		if((mBoard[0][0] == mBoard[1][1] && mBoard[0][0] == mBoard[2][2] && mBoard[0][0] == value) || (mBoard[0][2] == mBoard[1][1]
+				&& mBoard[0][2] == mBoard[2][0] && mBoard[0][2] == value)) {
 			return true;
 		}
-		for(int i = 0; i < 3; ++i) {
-			if(((mBoard[i][0] == mBoard[i][1] && mBoard[i][0] == mBoard[i][2] && mBoard[i][0] == 1)
-					|| (mBoard[0][i] == mBoard[1][i] && mBoard[0][i] == mBoard[2][i] && mBoard[0][i] == 1))) {
-				// System.out.println("X Row or Column win");
+		for(int i = 0; i < mBoard.length; ++i) {
+			if(((mBoard[i][0] == mBoard[i][1] && mBoard[i][0] == mBoard[i][2] && mBoard[i][0] == value)
+					|| (mBoard[0][i] == mBoard[1][i] && mBoard[0][i] == mBoard[2][i] && mBoard[0][i] == value))) {
 				return true;
 			}
 		}
@@ -58,26 +85,13 @@ public class MinMaxStrategy {
 	}
 
 	public boolean hasOWon() {
-		if((mBoard[0][0] == mBoard[1][1] && mBoard[0][0] == mBoard[2][2] && mBoard[0][0] == 2) || (mBoard[0][2] == mBoard[1][1]
-				&& mBoard[0][2] == mBoard[2][0] && mBoard[0][2] == 2)) {
-			// System.out.println("O Diagonal Win");
-			return true;
-		}
-		for(int i = 0; i < 3; ++i) {
-			if((mBoard[i][0] == mBoard[i][1] && mBoard[i][0] == mBoard[i][2] && mBoard[i][0] == 2)
-					|| (mBoard[0][i] == mBoard[1][i] && mBoard[0][i] == mBoard[2][i] && mBoard[0][i] == 2)) {
-				//  System.out.println("O Row or Column win");
-				return true;
-			}
-		}
-
-		return false;
+		return hasWon(GameStepO.VALUE);
 	}
 
 	public List<GameCell> getAvailableStates() {
 		ArrayList<GameCell> availablePoints = new ArrayList<>();
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 3; ++j) {
+		for(int i = 0; i < mBoard.length; ++i) {
+			for(int j = 0; j < mBoard[i].length; ++j) {
 				if(mBoard[i][j] == 0) {
 					availablePoints.add(new GameCell(i, j));
 				}
@@ -92,11 +106,9 @@ public class MinMaxStrategy {
 
 	public int minimax(int depth, int turn) {
 		if(hasXWon()) {
-			System.err.println("xwon depth = " + depth);
 			return RESULT_X_WON * (mMaxDepth - depth);
 		}
 		if(hasOWon()) {
-			System.err.println("owon depth = " + depth);
 			return RESULT_Y_WON * (mMaxDepth - depth);
 		}
 
@@ -108,27 +120,27 @@ public class MinMaxStrategy {
 		List<Integer> scores = new ArrayList<>();
 
 		for(int i = 0; i < pointsAvailable.size(); ++i) {
-			GameCell point = pointsAvailable.get(i);
+			GameCell cell = pointsAvailable.get(i);
 
 			if(turn == GameStepX.VALUE) {
-				placeAMove(point, GameStepX.VALUE);
+				placeAMove(cell, GameStepX.VALUE);
 				int currentScore = minimax(depth + 1, GameStepO.VALUE);
 				scores.add(currentScore);
 
 				if(depth == 0) {
-					rootsChildrenScores.add(new CellScore(currentScore, point));
+					rootsChildrenScores.add(new CellScore(currentScore, cell));
 				}
 
 			} else if(turn == GameStepO.VALUE) {
-				placeAMove(point, GameStepO.VALUE);
+				placeAMove(cell, GameStepO.VALUE);
 				final int currentScore = minimax(depth + 1, GameStepX.VALUE);
 				scores.add(currentScore);
 
 				if(depth == 0) {
-					rootsChildrenScores.add(new CellScore(currentScore, point));
+					rootsChildrenScores.add(new CellScore(currentScore, cell));
 				}
 			}
-			mBoard[point.getRow()][point.getColumn()] = 0;
+			mBoard[cell.getRow()][cell.getColumn()] = 0;
 		}
 		return turn == GameStepX.VALUE ? Utils.returnMax(scores) : Utils.returnMin(scores);
 	}
@@ -139,16 +151,7 @@ public class MinMaxStrategy {
 			return null;
 		}
 
-		int valueMax = Integer.MIN_VALUE;
-		int bestIndex = -1;
-
-		for(int i = 0; i < rootsChildrenScores.size(); ++i) {
-			if(valueMax < rootsChildrenScores.get(i).getScore()) {
-				valueMax = rootsChildrenScores.get(i).getScore();
-				bestIndex = i;
-			}
-		}
-
+		int bestIndex = getMaxIndex(rootsChildrenScores);
 		return rootsChildrenScores.get(bestIndex).getPoint();
 	}
 
@@ -158,14 +161,7 @@ public class MinMaxStrategy {
 			return null;
 		}
 
-		int MIN = Integer.MAX_VALUE;
-		int best = -1;
-		for(int i = 0; i < rootsChildrenScores.size(); ++i) {
-			if(MIN > rootsChildrenScores.get(i).getScore()) {
-				MIN = rootsChildrenScores.get(i).getScore();
-				best = i;
-			}
-		}
+		int best = getMinIndex(rootsChildrenScores);
 
 		return rootsChildrenScores.get(best).getPoint();
 	}
