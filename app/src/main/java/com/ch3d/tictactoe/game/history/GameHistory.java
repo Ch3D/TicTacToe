@@ -1,6 +1,6 @@
 package com.ch3d.tictactoe.game.history;
 
-import com.ch3d.tictactoe.game.board.GameBoardSimple;
+import com.ch3d.tictactoe.game.board.GameBoard;
 import com.ch3d.tictactoe.game.board.GameCell;
 import com.ch3d.tictactoe.game.history.step.GameStep;
 import com.ch3d.tictactoe.utils.Utils;
@@ -8,20 +8,17 @@ import com.ch3d.tictactoe.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import auto.parcel.AutoParcel;
-
 /**
  * Created by Ch3D on 22.07.2015.
  */
-@AutoParcel
 public class GameHistory {
-	protected GameBoardSimple mBoard;
+	protected GameBoard mBoard;
 
 	protected List<GameStep> mSteps;
 
-	public GameHistory() {
+	public GameHistory(GameBoard board) {
 		mSteps = new ArrayList<>();
-		mBoard = new GameBoardSimple();
+		mBoard = board;
 	}
 
 	public boolean addStep(final GameStep gameStep) {
@@ -92,7 +89,7 @@ public class GameHistory {
 	}
 
 	public GameHistory unmodifiable() {
-		return UnmodifiableGameHistory.create(this);
+		return UnmodifiableGameHistory.create(mBoard, this);
 	}
 
 	public int cell(final int row, final int col) {

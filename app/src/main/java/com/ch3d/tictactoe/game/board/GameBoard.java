@@ -35,4 +35,11 @@ public interface GameBoard {
 	int[] getDiagonalBackIndexes();
 
 	int[] getDiagonalIndexes();
+
+	GameCell createCell(int position);
+
+	/**
+	 * For debug purposes
+	 */
+	void dump();
 }

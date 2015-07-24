@@ -1,9 +1,10 @@
 package com.ch3d.tictactoe.game.state;
 
+import com.ch3d.tictactoe.game.board.GameBoardSimple;
 import com.ch3d.tictactoe.game.history.GameHistory;
+import com.ch3d.tictactoe.game.history.StepResult;
 import com.ch3d.tictactoe.game.history.step.GameStepO;
 import com.ch3d.tictactoe.game.history.step.GameStepX;
-import com.ch3d.tictactoe.game.history.StepResult;
 
 /**
  * Created by Ch3D on 22.07.2015.
@@ -14,7 +15,7 @@ public class GameStateController {
 	private GameState mCurrentState;
 
 	public GameStateController() {
-		mHistory = new GameHistory();
+		mHistory = new GameHistory(new GameBoardSimple());
 		mCurrentState = GameState.START;
 	}
 

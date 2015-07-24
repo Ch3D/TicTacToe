@@ -19,6 +19,7 @@ public class GameBoardSimple implements GameBoard {
 
 	protected int[][] mBoard = new int[BOARD_SIZE][BOARD_SIZE];
 
+	@Override
 	public GameCell createCell(final int pos) {
 		return GameCell.create(pos, BOARD_SIZE);
 	}
