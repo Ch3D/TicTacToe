@@ -9,7 +9,7 @@ import android.view.View;
 import com.ch3d.tictactoe.game.GameMode;
 import com.ch3d.tictactoe.game.controller.GameController;
 import com.ch3d.tictactoe.game.controller.GameControllerFactory;
-import com.ch3d.tictactoe.game.controller.GameListener;
+import com.ch3d.tictactoe.game.GameListener;
 import com.ch3d.tictactoe.game.history.StepResult;
 import com.ch3d.tictactoe.game.state.GameState;
 import com.ch3d.tictactoe.utils.EXTRAS;

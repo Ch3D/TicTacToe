@@ -1,4 +1,4 @@
-package com.ch3d.tictactoe.game.controller;
+package com.ch3d.tictactoe.game;
 
 import com.ch3d.tictactoe.game.state.GameState;
 

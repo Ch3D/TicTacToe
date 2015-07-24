@@ -1,5 +1,6 @@
 package com.ch3d.tictactoe.game.controller;
 
+import com.ch3d.tictactoe.game.GameListener;
 import com.ch3d.tictactoe.game.history.StepResult;
 import com.ch3d.tictactoe.game.mark.CellMarkO;
 import com.ch3d.tictactoe.game.mark.CellMarkX;
@@ -40,7 +41,7 @@ public class BasicGameController implements GameController {
 		final int pos = Integer.parseInt(tag);
 
 		processCellClick(listener, state, pos);
-		nextStep(mStateController, listener);
+		nextMove(mStateController, listener);
 	}
 
 	protected void processCellClick(final GameHistoryListener listener, final GameState state, final int pos) {
@@ -56,24 +57,32 @@ public class BasicGameController implements GameController {
 
 		if(state == GameState.START || state == GameState.X_MOVE) {
 			listener.onCellMarked(pos, CellMarkX.VALUE);
-			final GameState gameState = mStateController.moveX(pos);
-			if(gameState == GameState.X_WON) {
-				notifyWinner(GameState.X_WON);
-			} else if(gameState == GameState.DRAW) {
-				notifyDraw();
-			}
+			placeMoveX(pos);
 		} else {
 			listener.onCellMarked(pos, CellMarkO.VALUE);
-			final GameState gameState = mStateController.moveO(pos);
-			if(gameState == GameState.O_WON) {
-				notifyWinner(GameState.O_WON);
-			} else if(gameState == GameState.DRAW) {
-				notifyDraw();
-			}
+			placeMoveO(pos);
 		}
 	}
 
-	protected void nextStep(final GameStateController stateController, final GameHistoryListener listener) {
+	protected final void placeMoveO(final int pos) {
+		final GameState gameState = mStateController.moveO(pos);
+		if(gameState == GameState.O_WON) {
+			notifyWinner(GameState.O_WON);
+		} else if(gameState == GameState.DRAW) {
+			notifyDraw();
+		}
+	}
+
+	protected final void placeMoveX(final int pos) {
+		final GameState gameState = mStateController.moveX(pos);
+		if(gameState == GameState.X_WON) {
+			notifyWinner(GameState.X_WON);
+		} else if(gameState == GameState.DRAW) {
+			notifyDraw();
+		}
+	}
+
+	protected void nextMove(final GameStateController stateController, final GameHistoryListener listener) {
 		// do nothing
 	}
 

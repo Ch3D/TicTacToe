@@ -3,6 +3,8 @@ package com.ch3d.tictactoe.game.controller;
 import android.support.annotation.NonNull;
 
 import com.ch3d.tictactoe.game.GameMode;
+import com.ch3d.tictactoe.game.controller.ai.AIHumanGameController;
+import com.ch3d.tictactoe.game.controller.ai.HumanAIGameController;
 import com.ch3d.tictactoe.view.GameHistoryListener;
 
 /**

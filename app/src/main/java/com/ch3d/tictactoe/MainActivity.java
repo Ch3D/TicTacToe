@@ -13,19 +13,16 @@ public class MainActivity extends AppCompatActivity {
 
 	@OnClick(R.id.btn_human_human)
 	protected void onHumanVHuman() {
-		finish();
 		GameFieldActivity.start(this, GameMode.create(Player.create(true), Player.create(true)));
 	}
 
 	@OnClick(R.id.btn_human_ai)
 	protected void onHumanVAi() {
-		finish();
 		GameFieldActivity.start(this, GameMode.create(Player.create(true), Player.create(false)));
 	}
 
 	@OnClick(R.id.btn_ai_human)
 	protected void onAiVHuman() {
-		finish();
 		GameFieldActivity.start(this, GameMode.create(Player.create(false), Player.create(true)));
 	}
 

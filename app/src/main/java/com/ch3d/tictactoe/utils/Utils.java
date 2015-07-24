@@ -10,6 +10,9 @@ import java.util.List;
  * Created by Ch3D on 24.07.2015.
  */
 public class Utils {
+	/**
+	 * Convert cell into index(position)
+	 */
 	public static int getCellPosition(final GameCell cell, int boardSize) {
 		return (cell.getColumn() + 1) + (cell.getRow() * boardSize);
 	}

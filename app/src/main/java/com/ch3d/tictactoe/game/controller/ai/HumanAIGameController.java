@@ -1,14 +1,14 @@
-package com.ch3d.tictactoe.game.controller;
+package com.ch3d.tictactoe.game.controller.ai;
 
-import com.ch3d.tictactoe.game.CellScore;
 import com.ch3d.tictactoe.game.MinMaxStrategy;
 import com.ch3d.tictactoe.game.board.GameCell;
 import com.ch3d.tictactoe.game.history.GameHistory;
 import com.ch3d.tictactoe.game.history.step.GameStepO;
 import com.ch3d.tictactoe.game.history.step.GameStepX;
+import com.ch3d.tictactoe.game.mark.CellMark;
 import com.ch3d.tictactoe.game.mark.CellMarkO;
 import com.ch3d.tictactoe.game.state.GameState;
-import com.ch3d.tictactoe.game.state.GameStateController;
+import com.ch3d.tictactoe.utils.Utils;
 import com.ch3d.tictactoe.view.GameHistoryListener;
 
 import java.util.Random;
@@ -16,7 +16,7 @@ import java.util.Random;
 /**
  * Created by Ch3D on 22.07.2015.
  */
-public class HumanAIGameController extends BasicGameController {
+public class HumanAIGameController extends AIGameController {
 
 	private final Random mCornerRandom;
 
@@ -28,27 +28,12 @@ public class HumanAIGameController extends BasicGameController {
 	}
 
 	@Override
-	protected void nextStep(final GameStateController stateController, final GameHistoryListener listener) {
-		final int pos = analyze(stateController.getHistory().unmodifiable());
-
-		if(pos == WRONG_POSITION) {
-			return;
-		}
-
-		if(!mStateController.validateStep(pos)) {
-			nextStep(stateController, listener);
-		}
-
-		listener.onCellMarked(pos, CellMarkO.VALUE);
-		final GameState gameState = mStateController.moveO(pos);
-		if(gameState == GameState.O_WON) {
-			notifyWinner(GameState.O_WON);
-		} else if(gameState == GameState.DRAW) {
-			notifyDraw();
-		}
+	protected void placeMove(final int pos) {
+		placeMoveO(pos);
 	}
 
-	private int analyze(final GameHistory history) {
+	@Override
+	protected int analyze(final GameHistory history) {
 		// if this is a first step - occupy center or corner
 		if(history.size() == 1) {
 			if(history.cell(1, 1) == GameStepX.VALUE) {
@@ -62,18 +47,17 @@ public class HumanAIGameController extends BasicGameController {
 		// find best move
 		final MinMaxStrategy minMaxStrategy = new MinMaxStrategy(history.getBoardMatrix());
 		minMaxStrategy.callMinimax(0, GameStepO.VALUE);
-		for(CellScore cs : minMaxStrategy.getRootsChildrenScores()) {
-			System.out.println("Point: " + cs.getPoint() + " Score: " + cs.getScore());
-		}
 		final GameCell point = minMaxStrategy.returnBestMoveO();
 		if(point == null) {
 			return WRONG_POSITION;
 		}
-		System.err.println("point = " + point);
 		minMaxStrategy.placeAMove(point, GameStepO.VALUE);
-		final int pos = (point.getColumn() + 1) + (point.getRow() * history.getBoardSize());
-		System.out.println("pos: " + pos);
-		return pos;
+		return Utils.getCellPosition(point, history.getBoardSize());
+	}
+
+	@Override
+	protected CellMark getMark() {
+		return CellMarkO.VALUE;
 	}
 
 	@Override
@@ -86,6 +70,6 @@ public class HumanAIGameController extends BasicGameController {
 
 	@Override
 	public void startGame() {
-
+		// do nothing
 	}
 }
