@@ -24,6 +24,9 @@ public class GameStateController {
 	}
 
 	public GameState moveX(final int pos) {
+		if(mCurrentState.isGameFinished() || mCurrentState == GameState.O_MOVE) {
+			return mCurrentState;
+		}
 		if(mHistory.addStep(new GameStepX(pos))) {
 			mCurrentState = GameState.X_WON;
 		} else {
@@ -34,6 +37,9 @@ public class GameStateController {
 	}
 
 	public GameState moveO(final int pos) {
+		if(mCurrentState.isGameFinished() || mCurrentState == GameState.X_MOVE) {
+			return mCurrentState;
+		}
 		if(mHistory.addStep(new GameStepO(pos))) {
 			mCurrentState = GameState.O_WON;
 		} else {

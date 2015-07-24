@@ -1,5 +1,6 @@
 package com.ch3d.tictactoe.game.controller;
 
+import com.ch3d.tictactoe.GameHistoryListener;
 import com.ch3d.tictactoe.game.GameListener;
 import com.ch3d.tictactoe.game.history.GameHistory;
 import com.ch3d.tictactoe.game.history.StepResult;
@@ -8,7 +9,6 @@ import com.ch3d.tictactoe.game.mark.CellMarkO;
 import com.ch3d.tictactoe.game.mark.CellMarkX;
 import com.ch3d.tictactoe.game.state.GameState;
 import com.ch3d.tictactoe.game.state.GameStateController;
-import com.ch3d.tictactoe.view.GameHistoryListener;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,6 @@ public class BasicGameController implements GameController {
 		final int pos = Integer.parseInt(tag);
 
 		processCellClick(listener, state, pos);
-		nextMove(mStateController, listener);
 	}
 
 	protected void processCellClick(final GameHistoryListener listener, final GameState state, final int pos) {
@@ -64,6 +63,7 @@ public class BasicGameController implements GameController {
 			listener.onCellMarked(pos, CellMarkO.VALUE);
 			placeMoveO(pos);
 		}
+		nextMove(mStateController, listener);
 	}
 
 	protected final void placeMoveO(final int pos) {

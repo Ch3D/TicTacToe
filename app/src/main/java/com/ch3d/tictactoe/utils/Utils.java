@@ -12,6 +12,10 @@ import java.util.List;
 public class Utils {
 	public static final String EMPTY_STRING = "";
 
+	public static final float ALPHA_TRANSPARENT = 0f;
+
+	public static final float ALPHA_VISIBLE = 1f;
+
 	/**
 	 * Convert cell into index(position)
 	 */

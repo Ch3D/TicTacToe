@@ -1,4 +1,4 @@
-package com.ch3d.tictactoe;
+package com.ch3d.tictactoe.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.ch3d.tictactoe.R;
+import com.ch3d.tictactoe.TicTacToeApplication;
 import com.ch3d.tictactoe.fragment.GameRetainedFragment;
 import com.ch3d.tictactoe.game.GameListener;
 import com.ch3d.tictactoe.game.GameMode;
@@ -54,16 +56,21 @@ public class GameFieldActivity extends AppCompatActivity implements GameListener
 
 		mControlsView.setTranslationY(getResources().getDimensionPixelSize(R.dimen.game_control_height));
 		mControlsView.setAlpha(0);
+		initRetainData();
 
-		// retaind data
+	}
+
+	private void initRetainData() {
 		dataFragment = (GameRetainedFragment) getFragmentManager().findFragmentByTag(GameRetainedFragment.TAG);
-		if(dataFragment == null) {
+		if(dataFragment == null) { // clear start
 			dataFragment = new GameRetainedFragment();
 			getFragmentManager().beginTransaction().add(dataFragment, GameRetainedFragment.TAG).commit();
 			mGameController = GameControllerFactory.create(mMode, mViewGameField);
 			mViewGameField.setGameController(mGameController);
 			dataFragment.setData(mGameController);
-		} else {
+
+			mGameController.startGame();
+		} else { // retain data after screen rotation
 			mGameController = dataFragment.getData();
 			final GameState state = mGameController.getState();
 			if(state != null) {
@@ -76,7 +83,6 @@ public class GameFieldActivity extends AppCompatActivity implements GameListener
 			}
 
 			mViewGameField.prepare(mGameController);
-			mGameController.startGame();
 		}
 	}
 
@@ -88,7 +94,11 @@ public class GameFieldActivity extends AppCompatActivity implements GameListener
 
 	@OnClick(R.id.btn_replay)
 	protected void onReplay() {
-		replay();
+		mViewGameField.clear();
+		mGameController.replay(Utils.EMPTY_STRING);
+		mControlsView.animate().alpha(Utils.ALPHA_TRANSPARENT).translationY(getResources().getDimensionPixelSize(
+				R.dimen.game_control_height))
+		             .start();
 	}
 
 	@Override
@@ -109,17 +119,13 @@ public class GameFieldActivity extends AppCompatActivity implements GameListener
 		mViewGameField.showCombination(winCombination);
 	}
 
-	private void replay() {
-		mViewGameField.clear();
-		mGameController.replay(Utils.EMPTY_STRING);
-		mControlsView.animate().alpha(0f).translationY(getResources().getDimensionPixelSize(R.dimen.game_control_height)).start();
-	}
-
 	@Override
 	public void onGameEndedDraw() {
 		animateGameOver();
 		dataFragment.setCurrentState(GameState.DRAW);
 	}
 
-	private void animateGameOver() {mControlsView.animate().alpha(1f).translationY(0).start();}
+	private void animateGameOver() {
+		mControlsView.animate().alpha(Utils.ALPHA_VISIBLE).translationY(0).start();
+	}
 }

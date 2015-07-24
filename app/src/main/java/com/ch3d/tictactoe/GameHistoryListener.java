@@ -1,4 +1,4 @@
-package com.ch3d.tictactoe.view;
+package com.ch3d.tictactoe;
 
 import com.ch3d.tictactoe.game.mark.CellMark;
 

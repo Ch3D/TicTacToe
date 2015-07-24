@@ -1,5 +1,6 @@
 package com.ch3d.tictactoe.game.controller.ai;
 
+import com.ch3d.tictactoe.GameHistoryListener;
 import com.ch3d.tictactoe.game.MinMaxStrategy;
 import com.ch3d.tictactoe.game.board.GameCell;
 import com.ch3d.tictactoe.game.history.GameHistory;
@@ -8,7 +9,6 @@ import com.ch3d.tictactoe.game.mark.CellMark;
 import com.ch3d.tictactoe.game.mark.CellMarkX;
 import com.ch3d.tictactoe.game.state.GameState;
 import com.ch3d.tictactoe.utils.Utils;
-import com.ch3d.tictactoe.view.GameHistoryListener;
 
 /**
  * Created by Ch3D on 22.07.2015.
@@ -26,7 +26,7 @@ public class AIHumanGameController extends AIGameController {
 	@Override
 	protected int analyze(final GameHistory history) {
 		if(history.size() == 0) {
-			return (history.getBoardSize() / 2) + 1;
+			return (history.getCellsCount() / 2) + 1;
 		}
 
 		// find best move

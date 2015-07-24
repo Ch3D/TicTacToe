@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme"
         android:name=".TicTacToeApplication">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,7 @@
         </activity>
 
         <activity
-            android:name=".GameFieldActivity"
+            android:name=".activity.GameFieldActivity"
             android:label="@string/title_activity_game_field" />
     </application>
 

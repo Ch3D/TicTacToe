@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
 
@@ -12,6 +12,12 @@
     <style name="Button.GameField.Cell">
         <item name="android:layout_width">@dimen/game_field_cell_size</item>
         <item name="android:layout_height">@dimen/game_field_cell_size</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="Button.GameMode">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?android:listPreferredItemHeightLarge</item>
     </style>
 
 </resources>

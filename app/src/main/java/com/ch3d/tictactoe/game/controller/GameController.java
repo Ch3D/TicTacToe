@@ -3,7 +3,7 @@ package com.ch3d.tictactoe.game.controller;
 import com.ch3d.tictactoe.game.GameListener;
 import com.ch3d.tictactoe.game.history.StepResult;
 import com.ch3d.tictactoe.game.state.GameState;
-import com.ch3d.tictactoe.view.GameHistoryListener;
+import com.ch3d.tictactoe.GameHistoryListener;
 
 /**
  * Created by Ch3D on 21.07.2015.

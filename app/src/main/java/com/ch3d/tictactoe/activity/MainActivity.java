@@ -1,8 +1,9 @@
-package com.ch3d.tictactoe;
+package com.ch3d.tictactoe.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.ch3d.tictactoe.R;
 import com.ch3d.tictactoe.game.GameMode;
 import com.ch3d.tictactoe.game.player.Player;
 

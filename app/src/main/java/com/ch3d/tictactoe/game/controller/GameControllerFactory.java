@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.ch3d.tictactoe.game.GameMode;
 import com.ch3d.tictactoe.game.controller.ai.AIHumanGameController;
 import com.ch3d.tictactoe.game.controller.ai.HumanAIGameController;
-import com.ch3d.tictactoe.view.GameHistoryListener;
+import com.ch3d.tictactoe.GameHistoryListener;
 
 /**
  * Created by Ch3D on 22.07.2015.

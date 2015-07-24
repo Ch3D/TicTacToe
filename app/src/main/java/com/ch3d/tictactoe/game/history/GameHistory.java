@@ -121,6 +121,10 @@ public class GameHistory {
 		return mBoard.getSize();
 	}
 
+	public int getCellsCount() {
+		return mBoard.getCellsCount();
+	}
+
 	public List<GameStep> getMoves() {
 		return Collections.unmodifiableList(mSteps);
 	}

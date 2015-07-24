@@ -9,7 +9,7 @@ import com.ch3d.tictactoe.game.mark.CellMark;
 import com.ch3d.tictactoe.game.mark.CellMarkO;
 import com.ch3d.tictactoe.game.state.GameState;
 import com.ch3d.tictactoe.utils.Utils;
-import com.ch3d.tictactoe.view.GameHistoryListener;
+import com.ch3d.tictactoe.GameHistoryListener;
 
 import java.util.Random;
 
