@@ -5,7 +5,7 @@ package com.ch3d.tictactoe.game.mark;
  */
 public final class CellMarkX extends CellMark {
 
-	public static final CellMarkX VALUE = new CellMarkX(0, "x");
+	public static final CellMarkX VALUE = new CellMarkX(0, "X");
 
 	private CellMarkX(final int id, final String type) {
 		super(id, type);

@@ -2,9 +2,9 @@ package com.ch3d.tictactoe.game;
 
 import android.support.annotation.Nullable;
 
-import com.ch3d.tictactoe.game.history.GameCell;
-import com.ch3d.tictactoe.game.history.GameStepO;
-import com.ch3d.tictactoe.game.history.GameStepX;
+import com.ch3d.tictactoe.game.board.GameCell;
+import com.ch3d.tictactoe.game.history.step.GameStepO;
+import com.ch3d.tictactoe.game.history.step.GameStepX;
 import com.ch3d.tictactoe.utils.Utils;
 
 import java.util.ArrayList;

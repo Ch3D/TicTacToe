@@ -2,9 +2,9 @@ package com.ch3d.tictactoe.game.controller;
 
 import com.ch3d.tictactoe.game.CellScore;
 import com.ch3d.tictactoe.game.MinMaxStrategy;
-import com.ch3d.tictactoe.game.history.GameCell;
+import com.ch3d.tictactoe.game.board.GameCell;
 import com.ch3d.tictactoe.game.history.GameHistory;
-import com.ch3d.tictactoe.game.history.GameStepX;
+import com.ch3d.tictactoe.game.history.step.GameStepX;
 import com.ch3d.tictactoe.game.mark.CellMarkX;
 import com.ch3d.tictactoe.game.state.GameState;
 import com.ch3d.tictactoe.game.state.GameStateController;

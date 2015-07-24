@@ -1,6 +1,8 @@
 package com.ch3d.tictactoe.utils;
 
-import com.ch3d.tictactoe.game.history.GameCell;
+import android.support.annotation.Nullable;
+
+import com.ch3d.tictactoe.game.board.GameCell;
 
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
  */
 public class Utils {
 	public static int getCellPosition(final GameCell cell, int boardSize) {
-		return (cell.getColumn() * boardSize) + (cell.getRow() + 1);
+		return (cell.getColumn() + 1) + (cell.getRow() * boardSize);
 	}
 
 	public static int[][] clone(final int[][] src) {
@@ -45,5 +47,13 @@ public class Utils {
 			}
 		}
 		return list.get(index);
+	}
+
+	@Nullable
+	public static <T> T getLast(List<T> list) {
+		if(list == null | list.isEmpty()) {
+			return null;
+		}
+		return list.get(list.size() - 1);
 	}
 }

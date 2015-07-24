@@ -1,5 +1,10 @@
 package com.ch3d.tictactoe.game.history;
 
+import com.ch3d.tictactoe.game.board.GameBoardSimple;
+import com.ch3d.tictactoe.game.board.GameCell;
+import com.ch3d.tictactoe.game.history.step.GameStep;
+import com.ch3d.tictactoe.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,17 +15,17 @@ import auto.parcel.AutoParcel;
  */
 @AutoParcel
 public class GameHistory {
-	protected GameBoard mBoard;
+	protected GameBoardSimple mBoard;
 
-	protected List<GameStep> mHistory;
+	protected List<GameStep> mSteps;
 
 	public GameHistory() {
-		mHistory = new ArrayList<>();
-		mBoard = new GameBoard();
+		mSteps = new ArrayList<>();
+		mBoard = new GameBoardSimple();
 	}
 
 	public boolean addStep(final GameStep gameStep) {
-		mHistory.add(gameStep);
+		mSteps.add(gameStep);
 		GameCell gameCell = mBoard.createCell(gameStep.getPosition());
 		mBoard.fill(gameCell, gameStep);
 		return checkWinner(gameCell, gameStep.getValue());
@@ -32,64 +37,56 @@ public class GameHistory {
 	}
 
 	public boolean isRowFilled(final GameCell cell, final int value) {
-		final int row = cell.getRow();
-		return mBoard.getCellValue(row, 0) == value && mBoard.getCellValue(row, 1) == value && mBoard.getCellValue(row, 2) == value;
+		return mBoard.isRowFilled(cell.getRow(), value);
 	}
 
 	public boolean isColumnFilled(final GameCell cell, final int value) {
-		final int col = cell.getColumn();
-		return mBoard.getCellValue(0, col) == value && mBoard.getCellValue(1, col) == value && mBoard.getCellValue(2, col) == value;
+		return mBoard.isColumnFilled(cell.getColumn(), value);
 	}
 
 	public boolean isDiagonalFilled(final GameCell cell, final int value) {
-		final int col = cell.getColumn();
-		final int row = cell.getRow();
-		return row == col && mBoard.getCellValue(0, 0) == value && mBoard.getCellValue(1, 1) == value &&
-				mBoard.getCellValue(2, 2) == value;
+		return mBoard.isDiagonalFilled(cell.getRow(), cell.getColumn(), value);
 	}
 
 	public boolean isBackDiagonalFilled(final GameCell cell, final int value) {
-		final int col = cell.getColumn();
-		final int row = cell.getRow();
-		return row + col == 2 && mBoard.getCellValue(0, 2) == value && mBoard.getCellValue(1, 1) == value &&
-				mBoard.getCellValue(2, 0) == value;
+		return mBoard.isBackDiagonalFilled(cell.getRow(), cell.getColumn(), value);
 	}
 
 	public boolean isBusy(final int pos) {
-		for(final GameStep gameStep : mHistory) {
-			if(gameStep.getPosition() == pos) {
-				return true;
-			}
-		}
-		return false;
+		return mBoard.isBusy(pos);
 	}
 
+	/**
+	 * Clear history and game board
+	 */
 	public void clear() {
-		mHistory.clear();
+		mSteps.clear();
 		mBoard.clear();
-
 	}
 
 	public boolean isFilled() {
-		return mHistory.size() == mBoard.getCellsCount();
+		return mSteps.size() == mBoard.getCellsCount();
 	}
 
+	/**
+	 * @return combination which led to victory
+	 **/
 	public StepResult getWinnerCombination() {
-		final GameStep gameStep = mHistory.get(mHistory.size() - 1);
+		final GameStep gameStep = Utils.getLast(mSteps);
 		final int position = gameStep.getPosition();
 		final GameCell gameCell = mBoard.createCell(position);
 		final int value = gameStep.getValue();
 		if(isRowFilled(gameCell, value)) {
 			final int row = gameCell.getRow();
 			final int rowStartValue = row * mBoard.getSize();
-			return new StepResult(new int[]{rowStartValue + 1, rowStartValue + 2, rowStartValue + 3});
+			return new StepResult(mBoard.getRowIndexes(rowStartValue));
 		} else if(isColumnFilled(gameCell, value)) {
 			final int column = gameCell.getColumn();
-			return new StepResult(new int[]{column + 1, column + 1 + mBoard.getSize(), column + 1 + mBoard.getSize() + mBoard.getSize()});
+			return new StepResult(mBoard.getColumnIndexes(column));
 		} else if(isDiagonalFilled(gameCell, value)) {
-			return new StepResult(new int[]{1, 5, 9});
+			return new StepResult(mBoard.getDiagonalIndexes());
 		} else if(isBackDiagonalFilled(gameCell, value)) {
-			return new StepResult(new int[]{3, 5, 7});
+			return new StepResult(mBoard.getDiagonalBackIndexes());
 		}
 		return StepResult.NULL;
 	}
@@ -103,10 +100,10 @@ public class GameHistory {
 	}
 
 	/**
-	 * @return
+	 * @return steps count
 	 */
 	public int size() {
-		return mHistory.size();
+		return mSteps.size();
 	}
 
 	public void dump() {

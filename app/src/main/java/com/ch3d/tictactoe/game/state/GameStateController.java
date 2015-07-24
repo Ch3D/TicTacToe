@@ -1,8 +1,8 @@
 package com.ch3d.tictactoe.game.state;
 
 import com.ch3d.tictactoe.game.history.GameHistory;
-import com.ch3d.tictactoe.game.history.GameStepO;
-import com.ch3d.tictactoe.game.history.GameStepX;
+import com.ch3d.tictactoe.game.history.step.GameStepO;
+import com.ch3d.tictactoe.game.history.step.GameStepX;
 import com.ch3d.tictactoe.game.history.StepResult;
 
 /**

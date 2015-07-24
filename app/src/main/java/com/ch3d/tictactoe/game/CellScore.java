@@ -1,6 +1,6 @@
 package com.ch3d.tictactoe.game;
 
-import com.ch3d.tictactoe.game.history.GameCell;
+import com.ch3d.tictactoe.game.board.GameCell;
 
 /**
  * Created by Ch3D on 22.07.2015.
