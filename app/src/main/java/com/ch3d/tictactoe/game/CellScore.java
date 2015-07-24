@@ -1,6 +1,6 @@
 package com.ch3d.tictactoe.game;
 
-import android.graphics.Point;
+import com.ch3d.tictactoe.game.history.GameCell;
 
 /**
  * Created by Ch3D on 22.07.2015.
@@ -8,9 +8,9 @@ import android.graphics.Point;
 public class CellScore {
 	private final int mScore;
 
-	private final Point mPoint;
+	private final GameCell mPoint;
 
-	public CellScore(final int score, final Point point) {
+	public CellScore(final int score, final GameCell point) {
 		mScore = score;
 		mPoint = point;
 	}
@@ -19,7 +19,7 @@ public class CellScore {
 		return mScore;
 	}
 
-	public Point getPoint() {
+	public GameCell getPoint() {
 		return mPoint;
 	}
 }

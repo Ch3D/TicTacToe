@@ -5,14 +5,14 @@ package com.ch3d.tictactoe.game.history;
  */
 public class GameCell {
 	public static GameCell create(int position, int size) {
-		return new GameCell((position - 1) / size, (position - 1) % size);
+		return new GameCell((position - 1) % size, (position - 1) / size);
 	}
 
 	private int mRow;
 
 	private int mCol;
 
-	private GameCell(int row, int col) {
+	public GameCell(int row, int col) {
 		mRow = row;
 		mCol = col;
 	}

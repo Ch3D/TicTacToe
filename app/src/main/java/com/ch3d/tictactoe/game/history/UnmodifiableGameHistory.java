@@ -12,7 +12,7 @@ public class UnmodifiableGameHistory extends GameHistory {
 		return new UnmodifiableGameHistory(history.mBoard, history.mHistory);
 	}
 
-	private UnmodifiableGameHistory(int[][] board, List<GameStep> history) {
+	private UnmodifiableGameHistory(GameBoard board, List<GameStep> history) {
 		this.mBoard = board;
 		mHistory = Collections.unmodifiableList(history);
 	}

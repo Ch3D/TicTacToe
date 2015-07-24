@@ -1,7 +1,11 @@
 package com.ch3d.tictactoe.game;
 
-import android.graphics.Point;
 import android.support.annotation.Nullable;
+
+import com.ch3d.tictactoe.game.history.GameCell;
+import com.ch3d.tictactoe.game.history.GameStepO;
+import com.ch3d.tictactoe.game.history.GameStepX;
+import com.ch3d.tictactoe.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +14,22 @@ import java.util.List;
  * Created by Ch3D on 22.07.2015.
  */
 public class MinMaxStrategy {
+
+	public static final int RESULT_X_WON = +1;
+
+	public static final int RESULT_Y_WON = -1;
+
+	public static final int RESULT_NONE = 0;
+
 	private final int[][] mBoard;
 
 	private List<CellScore> rootsChildrenScores;
 
+	private int mMaxDepth;
+
 	public MinMaxStrategy(final int[][] board) {
 		mBoard = board;
+		mMaxDepth = mBoard.length * mBoard.length;
 	}
 
 	public List<CellScore> getRootsChildrenScores() {
@@ -60,91 +74,67 @@ public class MinMaxStrategy {
 		return false;
 	}
 
-	public List<Point> getAvailableStates() {
-		ArrayList<Point> availablePoints = new ArrayList<>();
+	public List<GameCell> getAvailableStates() {
+		ArrayList<GameCell> availablePoints = new ArrayList<>();
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 3; ++j) {
 				if(mBoard[i][j] == 0) {
-					availablePoints.add(new Point(i, j));
+					availablePoints.add(new GameCell(i, j));
 				}
 			}
 		}
 		return availablePoints;
 	}
 
-	public void placeAMove(Point point, int player) {
-		mBoard[point.x][point.y] = player;   //player = 1 for X, 2 for O
+	public void placeAMove(GameCell point, int player) {
+		mBoard[point.getRow()][point.getColumn()] = player;
 	}
 
 	public int minimax(int depth, int turn) {
 		if(hasXWon()) {
 			System.err.println("xwon depth = " + depth);
-			return +1 * (9 - depth);
+			return RESULT_X_WON * (mMaxDepth - depth);
 		}
 		if(hasOWon()) {
 			System.err.println("owon depth = " + depth);
-			return -1 * (9 - depth);
+			return RESULT_Y_WON * (mMaxDepth - depth);
 		}
 
-		List<Point> pointsAvailable = getAvailableStates();
+		List<GameCell> pointsAvailable = getAvailableStates();
 		if(pointsAvailable.isEmpty()) {
-			return 0;
+			return RESULT_NONE;
 		}
 
 		List<Integer> scores = new ArrayList<>();
 
 		for(int i = 0; i < pointsAvailable.size(); ++i) {
-			Point point = pointsAvailable.get(i);
+			GameCell point = pointsAvailable.get(i);
 
-			if(turn == 1) { //X's turn select the highest from below minimax() call
-				placeAMove(point, 1);
-				int currentScore = minimax(depth + 1, 2);
+			if(turn == GameStepX.VALUE) {
+				placeAMove(point, GameStepX.VALUE);
+				int currentScore = minimax(depth + 1, GameStepO.VALUE);
 				scores.add(currentScore);
 
 				if(depth == 0) {
 					rootsChildrenScores.add(new CellScore(currentScore, point));
 				}
 
-			} else if(turn == 2) {//O's turn select the lowest from below minimax() call
-				placeAMove(point, 2);
-				final int currentScore = minimax(depth + 1, 1);
+			} else if(turn == GameStepO.VALUE) {
+				placeAMove(point, GameStepO.VALUE);
+				final int currentScore = minimax(depth + 1, GameStepX.VALUE);
 				scores.add(currentScore);
 
 				if(depth == 0) {
 					rootsChildrenScores.add(new CellScore(currentScore, point));
 				}
 			}
-			mBoard[point.x][point.y] = 0; //Reset this point
+			mBoard[point.getRow()][point.getColumn()] = 0;
 		}
-		return turn == 1 ? returnMax(scores) : returnMin(scores);
-	}
-
-	public int returnMin(List<Integer> list) {
-		int min = Integer.MAX_VALUE;
-		int index = -1;
-		for(int i = 0; i < list.size(); ++i) {
-			if(list.get(i) < min) {
-				min = list.get(i);
-				index = i;
-			}
-		}
-		return list.get(index);
-	}
-
-	public int returnMax(List<Integer> list) {
-		int maxValue = Integer.MIN_VALUE;
-		int index = -1;
-		for(int i = 0; i < list.size(); ++i) {
-			if(list.get(i) > maxValue) {
-				maxValue = list.get(i);
-				index = i;
-			}
-		}
-		return list.get(index);
+		return turn == GameStepX.VALUE ? Utils.returnMax(scores) : Utils.returnMin(scores);
 	}
 
 	@Nullable
-	public Point returnBestMoveX() {
+	public GameCell returnBestMoveX() {
 		if(rootsChildrenScores.isEmpty()) {
 			return null;
 		}
@@ -163,7 +153,7 @@ public class MinMaxStrategy {
 	}
 
 	@Nullable
-	public Point returnBestMoveO() {
+	public GameCell returnBestMoveO() {
 		if(rootsChildrenScores.isEmpty()) {
 			return null;
 		}
